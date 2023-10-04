@@ -1,56 +1,32 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { createStackNavigator } from "@react-navigation/stack";
+import { Button, useColorScheme } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import SexScreen from "./SexScreen";
+import AgeScreen from "./AgeScreen";
+import WeightScreen from "./WeightScreen";
+import ActivityScreen from "./ActivityScreen";
+import IndexScreen from "./(home)/home";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const Stack = createStackNavigator();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
+    const colorScheme = useColorScheme();
+    const navigation = useNavigation();
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
-  );
+    return (
+        <Stack.Navigator initialRouteName="SexScreen">
+            <Stack.Screen name="SexScreen" component={SexScreen} />
+            <Stack.Screen name="AgeScreen" component={AgeScreen} />
+            <Stack.Screen name="WeightScreen" component={WeightScreen} />
+            <Stack.Screen name="ActivityScreen" component={ActivityScreen} />
+            <Stack.Screen
+                name="(home)/home"
+                component={IndexScreen}
+                options={{
+                    headerLeft: ()=> null,
+                }}
+            />
+        </Stack.Navigator>
+    );
 }
