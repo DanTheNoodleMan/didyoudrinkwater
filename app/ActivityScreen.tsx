@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
-function ActivityScreen({ navigation }) {
+function ActivityScreen({ navigation }: any) {
     const [activity, setActivity] = React.useState(0 as number);
     return (
         <View>

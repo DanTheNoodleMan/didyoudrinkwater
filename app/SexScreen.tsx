@@ -6,13 +6,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     Image,
+    SafeAreaView
 } from "react-native";
 import { FormContext } from "./FormContext";
 
 function SexScreen({ navigation }: any) {
     const { sex, setSex } = React.useContext(FormContext);
     return (
-        <View>
+        <SafeAreaView>
             <View style={styles.optionContainer}>
                 <TouchableOpacity
                     onPress={() => setSex("male")}
@@ -50,7 +51,7 @@ function SexScreen({ navigation }: any) {
                 onPress={() => navigation.navigate("AgeScreen")}
                 disabled={!sex}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
